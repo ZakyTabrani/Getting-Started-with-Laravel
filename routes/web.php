@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,20 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Signin
-Route::get('/signin', function () {
-    return 'Signin Form Page';
-});
-Route::post('/signin', function () {
-    return 'Processing Signin Data';
-});
+// Route untuk menampilkan form login
+Route::get('/signin', [UserController::class, 'showSigninForm']);
+
+// Route untuk memproses login
+Route::post('/signin', [UserController::class, 'signin']);
 
 //Signup
-Route::get('/signup', function () {
-    return 'Signup Form Page';
-});
-Route::post('/signup', function () {
-    return 'Processing Signup Data';
-});
+// Route untuk menampilkan form register
+Route::get('/signup', [UserController::class, 'showSignupForm']);
+
+// Route untuk memproses register
+Route::post('/signup', [UserController::class, 'signup']);
 
 //Home
 Route::get('/', function () {
@@ -35,8 +34,9 @@ Route::get('/', function () {
 });
 
 //Blog
+// Route untuk Blog
 Route::get('/blog', function () {
-    return 'Blog Articles List Page';
+    return view('blog');
 });
 //Route dengan parameter dan query
 Route::get('/blog/{blogId}', function ($blogId) {
@@ -61,3 +61,8 @@ Route::get('/author/{username}', function ($username) {
 Route::get('/privacy-policy', function () {
     return 'Privacy Policy Page';
 });
+
+// Route untuk Profile
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware('authMiddle');
